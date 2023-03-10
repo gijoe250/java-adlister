@@ -25,6 +25,7 @@
 <head>
     <title>Title</title>
 </head>
+<%@include file="partials/navbar.jsp"%>
 <body>
 <h1>
   People
