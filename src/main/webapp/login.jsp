@@ -22,6 +22,7 @@
     <title>Title</title>
 </head>
 <body>
+<%@include file="navbar.jsp" %>
 <form>
     <label for="userName"><b>Username</b></label>
     <input type="text" placeholder="Enter Username" name="userName" required>
