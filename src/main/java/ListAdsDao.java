@@ -16,7 +16,7 @@ public class ListAdsDao implements Ads {
         ads.add(new Ad(
             1,
             1,
-            "playstation for sale",
+            "Playstation for sale",
             "This is a slightly used playstation"
         ));
         ads.add(new Ad(
