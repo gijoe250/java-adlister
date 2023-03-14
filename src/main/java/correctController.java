@@ -13,4 +13,11 @@ public class correctController extends HttpServlet {
         request.setAttribute("correct", "Correct!");
         request.getRequestDispatcher("/answer.jsp").forward(request, response);
     }
+
+//    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+//        int guess = Integer.parseInt(request.getParameter("guess"));
+//        request.setAttribute("answer", guess);
+//        request.setAttribute("correct", "Correct!");
+//        request.getRequestDispatcher("/answer.jsp").forward(request, response);
+//    }
 }

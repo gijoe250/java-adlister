@@ -19,6 +19,7 @@ public class GuessingGameController extends HttpServlet {
         if (guess == answer){
             System.out.println("Correct!");
             response.sendRedirect(String.format("/correct?guess=%s", guess));
+//            request.getRequestDispatcher("correct").forward(request, response);
         }
         else {
             System.out.println("Incorrect :((");
