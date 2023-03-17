@@ -10,8 +10,8 @@
     <jsp:include page="/WEB-INF/partials/navbar.jsp" />
 
     <div class="container">
-        <h1><c:out value="Welcome, ${sessionScope.user}!"/></h1>
+        <h1><c:out value="Welcome, ${sessionScope.user.getUsername()}!"/></h1>
+        <h1><c:out value="Your email is ${sessionScope.user.getEmail()}!"/></h1>
     </div>
-
 </body>
 </html>
