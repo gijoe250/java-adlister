@@ -2,6 +2,7 @@ package com.codeup.adlister.dao;
 
 import com.codeup.adlister.models.Ad;
 import com.mysql.cj.jdbc.Driver;
+import model.Config;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -28,10 +29,11 @@ public class MySQLAdsDao implements Ads {
 
     @Override
     public List<Ad> all() {
-        Statement stmt = null;
+
         try {
-            stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM ads");
+            String sql = "SELECT * FROM ads";
+            PreparedStatement preStmt = connection.prepareStatement(sql);
+            ResultSet rs = preStmt.executeQuery();
             return createAdsFromResults(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving all ads.", e);
@@ -41,8 +43,8 @@ public class MySQLAdsDao implements Ads {
     @Override
     public Long insert(Ad ad) {
         try {
-            Statement stmt = connection.createStatement();
-            stmt.executeUpdate(createInsertQuery(ad), Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement stmt = createInsertQuery(ad);
+            stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             rs.next();
             return rs.getLong(1);
@@ -51,11 +53,13 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
-    private String createInsertQuery(Ad ad) {
-        return "INSERT INTO ads(user_id, title, description) VALUES "
-            + "(" + ad.getUserId() + ", "
-            + "'" + ad.getTitle() +"', "
-            + "'" + ad.getDescription() + "')";
+    private PreparedStatement createInsertQuery(Ad ad) throws SQLException {
+        String sql = "INSERT INTO ads(user_id, title, description) VALUES ( ?, ?, ?)";
+        PreparedStatement preStmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        preStmt.setLong(1, ad.getUserId());
+        preStmt.setString(2, ad.getTitle());
+        preStmt.setString(3, ad.getDescription());
+        return preStmt;
     }
 
     private Ad extractAd(ResultSet rs) throws SQLException {
